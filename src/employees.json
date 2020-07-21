@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "twitter": "@js",
+        "email": "john.smith@gmail.com",
+        "phone": "1-800-200-200"
+    },
+    {
+        "id": 2,
+        "firstName": "Mark",
+        "lastName": "Otto",
+        "twitter": "@mdo",
+        "email": "mark.otto@gmail.com",
+        "phone": "1-800-200-200"
+    }
+]
