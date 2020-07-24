@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import employeesJSON from '../employees'
 import SorterHeader from './SorterHeader'
 import sortArray from 'sort-array'
@@ -10,36 +10,31 @@ const TableResults = (props)=>{
 
     let [employees, setEmployees] = useState(employeesJSON)
     let [sortFocus, setSortFocus] = useState('')
-    let [sortDesc, setSortDesc] = useState(false)
 
+    let fields = Object.getOwnPropertyNames(employees[0])
 
+    // console.log(employees, fields)
+    let [isAsc, setIsAsc] = useState(true) 
+    console.log(isAsc)
     const handleSort = (event)=>{
-        // setEmployees({})
-        // event.preventDefault()
-        console.log(employees)
 
-        const handleSortFocus = (property) => {
-            let order = 'asc'
-            if (sortFocus === property){
-                console.log('already focus')
-                order === 'asc' ? order = 'desc' : order = 'asc'
-            }
-            setSortFocus(property)
-            sortArray(employees, {by: property, order})
+        const handleSortFocus = (header) => {
+            let order
+            console.log('before: ', sortFocus, header, isAsc)
+            if (sortFocus === header){ //check if already in focus
+                console.log('in focus')
+                if (isAsc === false) { setIsAsc(true); order = 'asc' } else { setIsAsc(false); order='desc'}
+            } else {console.log('new focus'); setIsAsc(true); order = 'asc'}
+            // isAsc ? order = 'desc' : order = 'asc'
+            setSortFocus(header)
+            sortArray(employees, {by: header, order})
+            console.log('after: ', sortFocus, isAsc)
         }
-
-        console.log(event.target.innerHTML) // ▽sortFocus === true ? (sortDesc = true ? '▼' : '▲') : '▽'
-        let header = event.target.dataset.id //First Name
-        let order = 'asc'
-        switch (header){
-            case 'ID': handleSortFocus('id') ; break
-            case 'First Name': handleSortFocus('firstName'); break
-            case 'Last Name': handleSortFocus('lastName'); break
-            case 'Twitter Handle': handleSortFocus('twitter'); break
-            case 'Email Address': handleSortFocus('email'); break
-            case 'Phone Number': handleSortFocus('phone'); break
-            default: console.log('unexpected header')
-        }
+        // ▽sortFocus === true ? (sortDesc = true ? '▼' : '▲') : '▽'
+        
+        let header = event.target.dataset.id  //First Name if click first name header
+        handleSortFocus(header)
+        
         const newEmployees = JSON.parse(JSON.stringify(employees))
         setEmployees(newEmployees)
     }
@@ -49,8 +44,8 @@ const TableResults = (props)=>{
         <table className="table table-dark table-striped">
         <thead>
             <tr>
-            {['ID','First Name', 'Last Name', 'Twitter Handle', 'Email Address', 'Phone Number'].map(header=>
-            <th scope="col"><SorterHeader data={employees} handleSort={handleSort} header={header}/></th>
+            {fields.map(header=>
+            <th scope="col"><SorterHeader data={employees} handleSort={handleSort} header={header} sortFocus={sortFocus} isAsc={isAsc}/></th>
             )}
             </tr>
         </thead>

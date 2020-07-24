@@ -5,14 +5,18 @@ import sortArray from 'sort-array'
 const SorterHeader = props=>{
     // ▽sortFocus === true ? (sortDesc = true ? '▼' : '▲') : '▽'
 
-    let [symbol, setSymbol] = useState('▽')
+    let symbol = '▽'
 
-    // if (props.focus) {
-    //     setSymbol('▼')
-    // } else {setSymbol('▽')}
+    // const handleSort = (event) => {
+    //     console.log()
+    //     props.handleSort
+    // }
+    if (props.sortFocus === props.header) {
+        if (props.isAsc) {symbol = '▼'} else {symbol = '▲'}
+    } else {symbol = '▽'}
 
     return(<>
-    {props.header} <button type='button' className={'btn btn-sm'} onClick={props.handleSort} focus={props.focus} data-id={props.header}>{symbol}</button>
+    {props.header} <button type='button' className={'btn btn-sm'} onClick={props.handleSort} data-focus={props.sortFocus} data-id={props.header} data-asc={props.isAsc}>{symbol}</button>
     </>)
 }
 
