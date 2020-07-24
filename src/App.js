@@ -25,7 +25,7 @@ function App() {
     let filterVal = filterRef.current.value
     if (searchVal === ''){setEmployees(employeesJSON); console.log(employees);return}
     // filterObject(employees, (key, value)=> event.target.value)
-    let newEmployees = JSON.parse(JSON.stringify(employeesJSON.filter((item)=>String(item[filterVal]).includes(searchVal))))
+    let newEmployees = JSON.parse(JSON.stringify(employeesJSON.filter((item)=>String(item[filterVal]).toLowerCase().includes(searchVal.toLowerCase()))))
     console.log(employees)
     console.log(newEmployees)
     setEmployees(newEmployees)
