@@ -3,14 +3,7 @@ import sortArray from 'sort-array'
 // import employeesJSON from '../employees'
 
 const SorterHeader = props=>{
-    // ▽sortFocus === true ? (sortDesc = true ? '▼' : '▲') : '▽'
-
     let symbol = '▽'
-
-    // const handleSort = (event) => {
-    //     console.log()
-    //     props.handleSort
-    // }
     if (props.sortFocus === props.header) {
         if (props.isAsc) {symbol = '▼'} else {symbol = '▲'}
     } else {symbol = '▽'}
